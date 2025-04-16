@@ -13,6 +13,10 @@ interface TimezoneDropdownProps {
 }
 
 const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
+  const [isDetecting, setIsDetecting] = useState(false);
+  const [wasAutoDetected, setWasAutoDetected] = useState(false);
+  const MotionIcon = motion(FaCompass);
+  //const [isSpinning, setIsSpinning] = useState(false);
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,10 +40,15 @@ const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
   }, []);
 
   const handleAutoDetect = () => {
+    setIsDetecting(true);
+    setWasAutoDetected(true); // ✅ Mark it as auto-detected
+
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     onChange(tz);
     setQuery(timezones.find((t) => t.value === tz)?.label || tz);
     setIsOpen(false);
+
+    setTimeout(() => setIsDetecting(false), 1000);
   };
 
   return (
@@ -64,9 +73,25 @@ const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
           onClick={handleAutoDetect}
           title="Detect my timezone"
           variant="ghost"
-          colorScheme="blue"
+          bg={wasAutoDetected ? "green.100" : "transparent"}
+          colorScheme={wasAutoDetected ? "green" : "blue"} // ✅ Dynamic color
         >
-          <FaCompass />
+          <MotionIcon
+            animate={isDetecting ? { rotate: 360 } : { rotate: 0 }}
+            transition={
+              isDetecting
+                ? {
+                    repeat: Infinity,
+                    duration: 1,
+                    ease: "linear",
+                  }
+                : {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 15,
+                  }
+            }
+          />
         </IconButton>
       </Tooltip>
 
@@ -101,6 +126,7 @@ const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
                 onChange(tz.value);
                 setQuery(tz.label);
                 setIsOpen(false);
+                setWasAutoDetected(false); // ✅ Clear the green state if user selects manually
               }}
             >
               {tz.label}
