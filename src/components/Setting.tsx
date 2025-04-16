@@ -1,15 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-
-const timezones = [
-  "UTC",
-  "Asia/Kolkata",
-  "Asia/Dubai",
-  "Europe/London",
-  "America/New_York",
-  "Asia/Tokyo",
-  "Australia/Sydney",
-];
+import timezonedata from "../data/timezones";
 
 const Settings = () => {
   const [numClocks, setNumClocks] = useState(0);
@@ -115,9 +106,9 @@ const Settings = () => {
               value={clock.timezone}
               onChange={(e) => updateClock(index, "timezone", e.target.value)}
             >
-              {timezones.map((tz) => (
-                <option key={tz} value={tz}>
-                  {tz}
+              {timezonedata.map((tz) => (
+                <option key={tz.value} value={tz.value}>
+                  {tz.label}
                 </option>
               ))}
             </select>
