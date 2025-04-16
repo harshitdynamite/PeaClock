@@ -1,4 +1,6 @@
 import { Tabs } from "@chakra-ui/react";
+import DigitalClock from "./DigitalClock";
+import Setting from "./Setting";
 
 const TabView = () => {
   return (
@@ -13,6 +15,14 @@ const TabView = () => {
         <Tabs.Trigger value="tab-1">Clocks</Tabs.Trigger>
         <Tabs.Trigger value="tab-2">Settings</Tabs.Trigger>
       </Tabs.List>
+
+      <Tabs.Content value="tab-1">
+        <DigitalClock />
+      </Tabs.Content>
+
+      <Tabs.Content value="tab-2">
+        <Setting />
+      </Tabs.Content>
     </Tabs.Root>
   );
 };
