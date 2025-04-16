@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { FaCompass } from "react-icons/fa";
 import timezones from "../data/timezones";
+import { Tooltip } from "@chakra-ui/tooltip";
 
 const MotionBox = motion(Box);
 
@@ -52,20 +53,22 @@ const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
         pr="30px" // room for icon
       />
 
-      <IconButton
-        aria-label="Auto-detect timezone"
-        size="xs"
-        position="absolute"
-        top="50%"
-        right="6px"
-        transform="translateY(-50%)"
-        onClick={handleAutoDetect}
-        title="Detect my timezone"
-        variant="ghost"
-        colorScheme="blue"
-      >
-        <FaCompass />
-      </IconButton>
+      <Tooltip hasArrow placement="top">
+        <IconButton
+          aria-label="Auto-detect timezone"
+          size="xs"
+          position="absolute"
+          top="50%"
+          right="6px"
+          transform="translateY(-50%)"
+          onClick={handleAutoDetect}
+          title="Detect my timezone"
+          variant="ghost"
+          colorScheme="blue"
+        >
+          <FaCompass />
+        </IconButton>
+      </Tooltip>
 
       {isOpen && (
         <MotionBox
