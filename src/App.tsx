@@ -1,5 +1,6 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import { useBreakpointValue } from "@chakra-ui/react";
+import NavBar from "./components/NavBar";
 // import AnalogClock from "./components/AnalogClock";
 
 // function App(){
@@ -30,8 +31,8 @@ function App() {
       gap="1"
     >
       <text>Breakpoint: {currentLayout}</text>
-      <GridItem area="nav" bg="coral" padding="4">
-        Nav
+      <GridItem area="nav" padding="3">
+        <NavBar />
       </GridItem>
       {/* <GridItem area="aside" bg="black" padding="4">
         Aside
