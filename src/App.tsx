@@ -31,7 +31,7 @@ function App() {
       width="300px"
       gap="1"
     >
-      <text>Breakpoint: {currentLayout}</text>
+      {/* <text>Breakpoint: {currentLayout}</text> */}
       <GridItem area="nav" padding="3">
         <NavBar />
       </GridItem>
