@@ -1,7 +1,8 @@
 import { Box, Text, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import TimezoneDropdown from "./TimezoneDropdown";
-import AddClockButton from "./AddClockButton"; // adjust the path if needed
+import AddClockButton from "./AddClockButton";
+import DeleteClockButton from "./DeleteClockButton";
 
 const Settings = () => {
   const [clocks, setClocks] = useState<{ name: string; timezone: string }[]>(
@@ -51,6 +52,7 @@ const Settings = () => {
           borderColor="gray.200"
           fontSize="sm"
           minH="100px"
+          position="relative"
           transition="all 0.2s ease"
           _hover={{
             borderColor: "blue.300",
@@ -58,6 +60,17 @@ const Settings = () => {
             bg: "white",
           }}
         >
+          {/* 🗑 Delete button in top-right */}
+          <Box position="absolute" top="4px" right="4px" zIndex="1">
+            <DeleteClockButton
+              onClick={() => {
+                const updated = [...clocks];
+                updated.splice(index, 1);
+                setClocks(updated);
+                saveToStorage(updated);
+              }}
+            />
+          </Box>
           <Text fontWeight="semibold" mb="2">
             Clock {index + 1}
           </Text>
