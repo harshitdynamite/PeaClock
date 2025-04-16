@@ -62,7 +62,7 @@ const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
         pr="30px" // room for icon
       />
 
-      <Tooltip hasArrow placement="top">
+      <Tooltip label="Auto-detect timezone" hasArrow placement="top">
         <IconButton
           aria-label="Auto-detect timezone"
           size="xs"
