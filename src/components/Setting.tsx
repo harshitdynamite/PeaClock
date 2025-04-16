@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const timezones = [
   "UTC",
@@ -11,22 +11,37 @@ const timezones = [
   "Australia/Sydney",
 ];
 
-const Setting = () => {
+const Settings = () => {
   const [numClocks, setNumClocks] = useState(0);
   const [clocks, setClocks] = useState<{ name: string; timezone: string }[]>(
     []
   );
 
+  // Load saved settings from chrome.storage
+  useEffect(() => {
+    chrome.storage.local.get(["clockSettings"], (result) => {
+      if (result.clockSettings) {
+        setClocks(result.clockSettings);
+        setNumClocks(result.clockSettings.length);
+      }
+    });
+  }, []);
+
+  const saveToStorage = (updatedClocks: typeof clocks) => {
+    chrome.storage.local.set({ clockSettings: updatedClocks });
+  };
+
   const handleClockCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const count = Math.max(0, parseInt(e.target.value) || 0);
     setNumClocks(count);
 
-    const newClocks = [...clocks];
-    while (newClocks.length < count) {
-      newClocks.push({ name: "", timezone: "UTC" });
+    const updated = [...clocks];
+    while (updated.length < count) {
+      updated.push({ name: "", timezone: "UTC" });
     }
-    newClocks.length = count; // trim extra clocks if needed
-    setClocks(newClocks);
+    updated.length = count;
+    setClocks(updated);
+    saveToStorage(updated);
   };
 
   const updateClock = (
@@ -37,21 +52,9 @@ const Setting = () => {
     const updated = [...clocks];
     updated[index][field] = value;
     setClocks(updated);
+    saveToStorage(updated);
   };
 
-  //   return (
-  //     <Box padding={4}>
-  //       <form>
-  //         <div className="mb-3">
-  //           <label htmlFor="noOfClocks" className="form-label">
-  //             No of Clocks
-  //           </label>
-  //           <input id="noOfClocks" type="number" className="form-control"></input>
-  //         </div>
-  //       </form>
-  //     </Box>
-  //   );
-  //   <div>⚙️ This is the Settings tab</div>;
   return (
     <Box px="3" py="2" fontSize="sm">
       <Box mb="3">
@@ -124,4 +127,5 @@ const Setting = () => {
     </Box>
   );
 };
-export default Setting;
+
+export default Settings;
