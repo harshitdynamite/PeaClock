@@ -28,6 +28,8 @@ const Clock = () => {
       (result: { clockSettings?: ClockConfig[] }) => {
         if (result.clockSettings) {
           setClocks(result.clockSettings);
+        } else {
+          setClocks([]); // fallback
         }
       }
     );
@@ -66,28 +68,44 @@ const Clock = () => {
 
   return (
     <Box px="3" py="2" fontSize="sm">
-      <Box display="flex" flexDirection="column" gap="12px">
-        {clocks.map((clock, index) => (
-          <Box
-            key={index}
-            p="2"
-            bg="gray.100"
-            borderRadius="md"
-            border="1px solid"
-            borderColor="gray.200"
-          >
-            <Text fontWeight="bold" fontSize="sm" mb="1">
-              {clock.name || `Clock ${index + 1}`}
-            </Text>
-            <Text fontSize="lg" fontFamily="monospace">
-              {times[index] || "Loading..."}
-            </Text>
-            <Text fontSize="xs" color="gray.600">
-              {clock.timezone}
-            </Text>
-          </Box>
-        ))}
-      </Box>
+      {clocks.length === 0 ? (
+        <Box
+          p="4"
+          border="1px dashed"
+          borderColor="gray.300"
+          borderRadius="md"
+          bg="gray.50"
+          textAlign="center"
+        >
+          <Text color="gray.600">No clocks configured.</Text>
+          <Text fontSize="xs" color="gray.500">
+            Go to the Settings tab to add clocks.
+          </Text>
+        </Box>
+      ) : (
+        <Box display="flex" flexDirection="column" gap="12px">
+          {clocks.map((clock, index) => (
+            <Box
+              key={index}
+              p="2"
+              bg="gray.100"
+              borderRadius="md"
+              border="1px solid"
+              borderColor="gray.200"
+            >
+              <Text fontWeight="bold" fontSize="sm" mb="1">
+                {clock.name || `Clock ${index + 1}`}
+              </Text>
+              <Text fontSize="lg" fontFamily="monospace">
+                {times[index] || "Loading..."}
+              </Text>
+              <Text fontSize="xs" color="gray.600">
+                {clock.timezone}
+              </Text>
+            </Box>
+          ))}
+        </Box>
+      )}
     </Box>
   );
 };
