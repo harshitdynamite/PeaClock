@@ -1,6 +1,7 @@
-import { Box, Input, Text } from "@chakra-ui/react";
+import { Box, Input, IconButton } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { FaCompass } from "react-icons/fa";
 import timezones from "../data/timezones";
 
 const MotionBox = motion(Box);
@@ -15,12 +16,10 @@ const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Filtered timezone list
   const filtered = timezones.filter((tz) =>
     tz.label.toLowerCase().includes(query.toLowerCase())
   );
 
-  // Close dropdown on outside click
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (
@@ -35,18 +34,39 @@ const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleAutoDetect = () => {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    onChange(tz);
+    setQuery(timezones.find((t) => t.value === tz)?.label || tz);
+    setIsOpen(false);
+  };
+
   return (
     <Box ref={containerRef} position="relative">
-      {/* Trigger Input */}
       <Input
         size="sm"
         placeholder="Search timezones..."
-        onFocus={() => setIsOpen(true)}
         value={query}
+        onFocus={() => setIsOpen(true)}
         onChange={(e) => setQuery(e.target.value)}
+        pr="30px" // room for icon
       />
 
-      {/* Dropdown Panel */}
+      <IconButton
+        aria-label="Auto-detect timezone"
+        size="xs"
+        position="absolute"
+        top="50%"
+        right="6px"
+        transform="translateY(-50%)"
+        onClick={handleAutoDetect}
+        title="Detect my timezone"
+        variant="ghost"
+        colorScheme="blue"
+      >
+        <FaCompass />
+      </IconButton>
+
       {isOpen && (
         <MotionBox
           initial={{ opacity: 0, scale: 0.95, y: -4 }}
@@ -76,18 +96,17 @@ const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
               bg={tz.value === value ? "blue.100" : "transparent"}
               onClick={() => {
                 onChange(tz.value);
-                setQuery(tz.label); // show selected label
-                setIsOpen(false); // close dropdown
+                setQuery(tz.label);
+                setIsOpen(false);
               }}
             >
               {tz.label}
             </Box>
           ))}
-
           {filtered.length === 0 && (
-            <Text fontSize="xs" color="gray.500" p="2">
+            <Box px="2" py="1" fontSize="xs" color="gray.500">
               No timezones found
-            </Text>
+            </Box>
           )}
         </MotionBox>
       )}
