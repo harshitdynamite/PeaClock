@@ -1,6 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import timezonedata from "../data/timezones";
+
+import TimezoneDropdown from "./TimezoneDropdown";
 
 const Settings = () => {
   const [numClocks, setNumClocks] = useState(0);
@@ -96,22 +97,10 @@ const Settings = () => {
 
           <Box>
             <Text mb="1">Timezone</Text>
-            <select
-              style={{
-                width: "100%",
-                padding: "6px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
+            <TimezoneDropdown
               value={clock.timezone}
-              onChange={(e) => updateClock(index, "timezone", e.target.value)}
-            >
-              {timezonedata.map((tz) => (
-                <option key={tz.value} value={tz.value}>
-                  {tz.label}
-                </option>
-              ))}
-            </select>
+              onChange={(newTz) => updateClock(index, "timezone", newTz)}
+            />
           </Box>
         </Box>
       ))}
