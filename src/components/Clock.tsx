@@ -21,8 +21,8 @@ const Clock = () => {
   const [clocks, setClocks] = useState<ClockConfig[]>([]);
   const [times, setTimes] = useState<string[]>([]);
 
-  // Load saved clock settings
-  useEffect(() => {
+  // Load clocks from storage
+  const loadClocks = () => {
     chrome.storage.local.get(
       ["clockSettings"],
       (result: { clockSettings?: ClockConfig[] }) => {
@@ -31,9 +31,28 @@ const Clock = () => {
         }
       }
     );
+  };
+
+  // Initial load
+  useEffect(() => {
+    loadClocks();
   }, []);
 
-  // Update time every second
+  // Listen for storage changes
+  useEffect(() => {
+    const listener = (changes: {
+      [key: string]: chrome.storage.StorageChange;
+    }) => {
+      if (changes.clockSettings) {
+        loadClocks();
+      }
+    };
+
+    chrome.storage.onChanged.addListener(listener);
+    return () => chrome.storage.onChanged.removeListener(listener);
+  }, []);
+
+  // Update clock display every second
   useEffect(() => {
     const interval = setInterval(() => {
       const updatedTimes = clocks.map((clock) =>
