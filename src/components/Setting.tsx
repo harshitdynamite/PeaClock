@@ -1,5 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { Input } from "@chakra-ui/react";
 
 import TimezoneDropdown from "./TimezoneDropdown";
 
@@ -74,29 +75,29 @@ const Settings = () => {
           borderRadius="md"
           border="1px solid"
           borderColor="gray.200"
+          fontSize="sm"
+          minH="100px"
+          transition="all 0.2s ease"
+          _hover={{
+            borderColor: "blue.300",
+            boxShadow: "sm",
+            bg: "white",
+          }}
         >
           <Text fontWeight="semibold" mb="2">
             Clock {index + 1}
           </Text>
 
           <Box mb="2">
-            <Text mb="1">Clock Name</Text>
-            <input
-              style={{
-                width: "100%",
-                padding: "6px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-              type="text"
+            <Input
+              placeholder="Name your clock"
               value={clock.name}
+              size="sm"
               onChange={(e) => updateClock(index, "name", e.target.value)}
-              placeholder="e.g. Dubai Office"
             />
           </Box>
 
           <Box>
-            <Text mb="1">Timezone</Text>
             <TimezoneDropdown
               value={clock.timezone}
               onChange={(newTz) => updateClock(index, "timezone", newTz)}
