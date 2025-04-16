@@ -1,5 +1,5 @@
 import { Box, Text, Input } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import TimezoneDropdown from "./TimezoneDropdown";
 import AddClockButton from "./AddClockButton";
 import DeleteClockButton from "./DeleteClockButton";
@@ -8,7 +8,7 @@ const Settings = () => {
   const [clocks, setClocks] = useState<{ name: string; timezone: string }[]>(
     []
   );
-
+  const lastClockInputRef = useRef<HTMLInputElement | null>(null);
   // Load saved settings from chrome.storage
   useEffect(() => {
     chrome.storage.local.get(["clockSettings"], (result) => {
@@ -77,6 +77,7 @@ const Settings = () => {
 
           <Box mb="2">
             <Input
+              ref={index === clocks.length - 1 ? lastClockInputRef : null}
               placeholder="Name your clock"
               value={clock.name}
               size="sm"
@@ -95,8 +96,19 @@ const Settings = () => {
 
       <Box textAlign="center" mt="2">
         <AddClockButton
-          onClick={() =>
-            setClocks((prev) => [...prev, { name: "", timezone: "UTC" }])
+          onClick={
+            () => {
+              const updated = [...clocks, { name: "", timezone: "UTC" }];
+              setClocks(updated);
+              setTimeout(() => {
+                lastClockInputRef.current?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+                lastClockInputRef.current?.focus();
+              }, 100); // delay ensures DOM is updated
+            }
+            //setClocks((prev) => [...prev, { name: "", timezone: "UTC" }])
           }
         />
       </Box>
