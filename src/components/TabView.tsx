@@ -1,4 +1,6 @@
 import { Tabs } from "@chakra-ui/react";
+import { FaClock } from "react-icons/fa";
+import { IoSettings } from "react-icons/io5";
 import DigitalClock from "./DigitalClock";
 import Setting from "./Setting";
 
@@ -12,8 +14,14 @@ const TabView = () => {
       colorScheme="blue"
     >
       <Tabs.List>
-        <Tabs.Trigger value="tab-1">Clocks</Tabs.Trigger>
-        <Tabs.Trigger value="tab-2">Settings</Tabs.Trigger>
+        <Tabs.Trigger value="tab-1">
+          <FaClock />
+          Clocks
+        </Tabs.Trigger>
+        <Tabs.Trigger value="tab-2">
+          <IoSettings />
+          Settings
+        </Tabs.Trigger>
       </Tabs.List>
 
       <Tabs.Content value="tab-1">
