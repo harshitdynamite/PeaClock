@@ -5,16 +5,16 @@ export const system = createSystem(defaultConfig, {
     tokens: {
       colors: {
         brand: {
-          50: "#e8f5ec",
-          100: "#c3e6d0",
-          200: "#9fd7b4",
-          300: "#7ac899",
-          400: "#55b97e",
-          500: "#39a168", // Peacock green
-          600: "#2d7f52",
-          700: "#215e3d",
-          800: "#143c28",
-          900: "#081b14",
+          50: { value: "#e8f5ec" },
+          100: { value: "#c3e6d0" },
+          200: { value: "#9fd7b4" },
+          300: { value: "#7ac899" },
+          400: { value: "#55b97e" },
+          500: { value: "#39a168" }, // Peacock green
+          600: { value: "#2d7f52" },
+          700: { value: "#215e3d" },
+          800: { value: "#143c28" },
+          900: { value: "#081b14" },
         },
       },
       fonts: {

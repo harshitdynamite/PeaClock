@@ -1,14 +1,24 @@
-import { Provider } from "./components/ui/provider";
-import { StrictMode } from "react";
-
+// src/main.tsx
+import React from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
+import { ChakraProvider } from "@chakra-ui/react";
+import { ColorModeProvider } from "./components/ui/color-mode";
+
+import { system } from "./system"; // ✅ Your custom theme system
+import App from "./App";
+
+function Provider({ children }: { children: React.ReactNode }) {
+  return (
+    <ChakraProvider value={system}>
+      <ColorModeProvider>{children}</ColorModeProvider>
+    </ChakraProvider>
+  );
+}
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+  <React.StrictMode>
     <Provider>
       <App />
     </Provider>
-  </StrictMode>
+  </React.StrictMode>
 );
