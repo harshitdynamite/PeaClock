@@ -140,7 +140,7 @@ const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
               py="1"
               fontSize="sm"
               borderRadius="md"
-              _hover={{ bg: "gray.100", cursor: "pointer" }}
+              _hover={{ bg: "white", cursor: "pointer" }}
               bg={tz.value === value ? "blue.100" : "transparent"}
               onClick={() => {
                 onChange(tz.value);
@@ -153,7 +153,7 @@ const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
             </Box>
           ))}
           {filtered.length === 0 && (
-            <Box px="2" py="1" fontSize="xs" color="gray.500">
+            <Box px="2" py="1" fontSize="xs" color="white">
               No timezones found
             </Box>
           )}

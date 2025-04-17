@@ -27,7 +27,7 @@ const AnimatedPeaClock = () => {
       animationData={peacockAnimation}
       loop
       autoplay
-      style={{ width: "40px", height: "40px" }}
+      style={{ width: "70px", height: "70px" }}
     />
     //</div>
   );
