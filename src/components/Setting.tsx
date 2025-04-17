@@ -44,19 +44,18 @@ const Settings = () => {
       {clocks.map((clock, index) => (
         <Box
           key={index}
-          p="2"
+          p="3"
           mb="3"
-          bg="gray.50"
-          borderRadius="md"
+          borderRadius="lg"
           border="1px solid"
-          borderColor="gray.200"
-          fontSize="sm"
+          bg="brand.50"
+          borderColor="brand.100"
           minH="100px"
           position="relative"
           transition="all 0.2s ease"
           _hover={{
-            borderColor: "blue.300",
-            boxShadow: "sm",
+            borderColor: "brand.300",
+            boxShadow: "md",
             bg: "white",
           }}
         >
@@ -71,7 +70,7 @@ const Settings = () => {
               }}
             />
           </Box>
-          <Text fontWeight="semibold" mb="2">
+          <Text fontWeight="semibold" color="brand.700" mb="2">
             Clock {index + 1}
           </Text>
 
@@ -81,6 +80,14 @@ const Settings = () => {
               placeholder="Name your clock"
               value={clock.name}
               size="sm"
+              borderRadius="md"
+              border="1px solid"
+              borderColor="brand.100"
+              _focus={{
+                borderColor: "brand.400",
+                boxShadow: "0 0 0 1px var(--colors-brand-400)",
+              }}
+              bg="white"
               onChange={(e) => updateClock(index, "name", e.target.value)}
             />
           </Box>
@@ -96,23 +103,19 @@ const Settings = () => {
 
       <Box textAlign="center" mt="2">
         <AddClockButton
-          onClick={
-            () => {
-              const updated = [...clocks, { name: "", timezone: "UTC" }];
-              setClocks(updated);
-              setTimeout(() => {
-                lastClockInputRef.current?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "center",
-                });
-                lastClockInputRef.current?.focus();
-              }, 100); // delay ensures DOM is updated
-            }
-            //setClocks((prev) => [...prev, { name: "", timezone: "UTC" }])
-          }
+          onClick={() => {
+            const updated = [...clocks, { name: "", timezone: "UTC" }];
+            setClocks(updated);
+            setTimeout(() => {
+              lastClockInputRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+              lastClockInputRef.current?.focus();
+            }, 100);
+          }}
         />
       </Box>
-      {/* Optionally: AddClockButton goes here later */}
     </Box>
   );
 };

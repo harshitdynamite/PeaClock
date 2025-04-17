@@ -59,22 +59,41 @@ const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
         value={query}
         onFocus={() => setIsOpen(true)}
         onChange={(e) => setQuery(e.target.value)}
-        pr="30px" // room for icon
+        pr="30px"
+        border="1px solid"
+        borderColor="brand.100"
+        _focus={{
+          borderColor: "brand.400",
+          boxShadow: "0 0 0 1px var(--colors-brand-400)",
+        }}
+        borderRadius="md"
+        bg="white"
       />
-
-      <Tooltip label="Auto-detect timezone" hasArrow placement="top">
+      <Tooltip label="Detect your timezone" hasArrow placement="top">
         <IconButton
           aria-label="Auto-detect timezone"
           size="xs"
+          p="0"
+          minW="24px"
+          h="24px"
           position="absolute"
           top="50%"
           right="6px"
           transform="translateY(-50%)"
           onClick={handleAutoDetect}
-          title="Detect my timezone"
-          variant="ghost"
+          title={undefined}
+          variant="outline"
+          color="brand.500"
+          borderRadius="full"
+          border="1px solid"
+          borderColor="brand.300"
+          //bg="transparent"
           bg={wasAutoDetected ? "green.100" : "transparent"}
-          colorScheme={wasAutoDetected ? "green" : "blue"} // ✅ Dynamic color
+          _hover={{
+            bg: "brand.50",
+            borderColor: "brand.400",
+          }}
+          colorScheme={wasAutoDetected ? "green.100" : "transparent"} // ✅ Dynamic color
         >
           <MotionIcon
             animate={isDetecting ? { rotate: 360 } : { rotate: 0 }}
@@ -107,11 +126,12 @@ const TimezoneDropdown = ({ value, onChange }: TimezoneDropdownProps) => {
           zIndex={10}
           maxH="150px"
           overflowY="auto"
-          border="1px solid #ccc"
-          borderRadius="md"
-          p="1"
+          border="1px solid"
+          borderColor="brand.100"
+          borderRadius="lg"
           bg="white"
-          boxShadow="md"
+          boxShadow="lg"
+          p="1"
         >
           {filtered.map((tz) => (
             <Box
