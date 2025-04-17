@@ -40,7 +40,14 @@ const Settings = () => {
   };
 
   return (
-    <Box px="3" py="2" fontSize="sm">
+    <Box
+      px="3"
+      py="2"
+      fontSize="sm"
+      boxShadow="sm"
+      borderRadius="md"
+      bg="white"
+    >
       {clocks.map((clock, index) => (
         <Box
           key={index}

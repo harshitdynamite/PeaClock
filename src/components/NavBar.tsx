@@ -1,28 +1,35 @@
-import { HStack, Text } from "@chakra-ui/react";
+import { Text, Box, Flex } from "@chakra-ui/react";
 import AnimatedPeaClock from "../components/AnimatedPeaClock";
-// import icon16 from "../assets/peaclock_16x16.png";
-// import icon32 from "../assets/peaclock_32x32.png";
-// import icon48 from "../assets/peaclock_48x48.png";
-// import icon128 from "../assets/peaclock_128x128.png";
 
 const NavBar = () => {
   return (
-    <HStack overflow="hidden" bg="pink">
-      <AnimatedPeaClock />
-      {/* <Image
-        boxSize="30px"
-        src={icon32} // fallback
-        srcSet={`
-    ${icon16} 16w,
-    ${icon32} 32w,
-    ${icon48} 48w,
-    ${icon128} 128w
-  `}
-        sizes="30px"
-        alt="PeaClock logo"
-      /> */}
-      <Text>PeaClock</Text>
-    </HStack>
+    <Box>
+      <Flex
+        px={3}
+        py={2}
+        gap={3} // Replaces spacing in HStack
+        align="center"
+        justify="flex-start"
+      >
+        {/* Peacock Icon (larger size) */}
+        <Box boxSize="60px">
+          <AnimatedPeaClock />
+        </Box>
+
+        {/* PeaClock Title */}
+        <Text fontSize="2xl" fontWeight="bold" color="brand.800">
+          PeaClock
+        </Text>
+      </Flex>
+      <Box
+        height="4px"
+        mx="auto"
+        my={2}
+        borderRadius="full"
+        bg="green.700" // dark green tone
+        boxShadow="md" // subtle shadow
+      />
+    </Box>
   );
 };
 
