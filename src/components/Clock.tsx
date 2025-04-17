@@ -23,16 +23,13 @@ const Clock = () => {
 
   // Load clocks from storage
   const loadClocks = () => {
-    chrome.storage.local.get(
-      ["clockSettings"],
-      (result: { clockSettings?: ClockConfig[] }) => {
-        if (result.clockSettings) {
-          setClocks(result.clockSettings);
-        } else {
-          setClocks([]); // fallback
-        }
+    chrome.storage.local.get(["clockSettings"], (result) => {
+      if (result.clockSettings) {
+        setClocks(result.clockSettings);
+      } else {
+        setClocks([]); // fallback
       }
-    );
+    });
   };
 
   // Initial load
@@ -72,13 +69,13 @@ const Clock = () => {
         <Box
           p="4"
           border="1px dashed"
-          borderColor="gray.300"
+          borderColor="brand.100"
           borderRadius="md"
-          bg="gray.50"
+          bg="brand.50"
           textAlign="center"
         >
-          <Text color="gray.600">No clocks configured.</Text>
-          <Text fontSize="xs" color="gray.500">
+          <Text color="brand.700">No clocks configured.</Text>
+          <Text fontSize="xs" color="brand.500">
             Go to the Settings tab to add clocks.
           </Text>
         </Box>
@@ -87,19 +84,28 @@ const Clock = () => {
           {clocks.map((clock, index) => (
             <Box
               key={index}
-              p="2"
-              bg="gray.100"
-              borderRadius="md"
+              p="3"
+              bg="brand.50"
+              borderRadius="lg"
               border="1px solid"
-              borderColor="gray.200"
+              borderColor="brand.100"
+              _hover={{
+                borderColor: "brand.300",
+                boxShadow: "md",
+              }}
             >
-              <Text fontWeight="bold" fontSize="sm" mb="1">
+              <Text
+                fontWeight="semibold"
+                fontSize="sm"
+                color="brand.800"
+                mb="1"
+              >
                 {clock.name || `Clock ${index + 1}`}
               </Text>
-              <Text fontSize="lg" fontFamily="monospace">
+              <Text fontSize="2xl" fontFamily="monospace" color="brand.600">
                 {times[index] || "Loading..."}
               </Text>
-              <Text fontSize="xs" color="gray.600">
+              <Text fontSize="xs" color="brand.500">
                 {clock.timezone}
               </Text>
             </Box>
