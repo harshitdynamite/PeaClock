@@ -52,7 +52,8 @@ const Settings = () => {
         <Box
           key={index}
           p="3"
-          mb="3"
+          //mb={3}
+          mb={index === clocks.length - 1 ? 6 : 3}
           borderRadius="lg"
           border="1px solid"
           bg="brand.50"

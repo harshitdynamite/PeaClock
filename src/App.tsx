@@ -1,7 +1,8 @@
-import { Grid, GridItem, Box } from "@chakra-ui/react";
+import { Grid, GridItem, Flex } from "@chakra-ui/react";
 import { useBreakpointValue } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import TabView from "./components/TabView";
+import Footer from "./components/Footer";
 // import AnalogClock from "./components/AnalogClock";
 
 // function App(){
@@ -20,7 +21,18 @@ function App() {
 
   console.log("Current breakpoint:", currentLayout);
   return (
-    <Box bg="#e8f5ec" minHeight="100vh" py={2} px={3}>
+    <Flex
+      direction="column"
+      bg="#e8f5ec"
+      height="600px" // or 550px, adjust as needed
+      width="350px"
+      py={2}
+      px={3}
+      border="1px solid #4b9c7a"
+      borderRadius="lg"
+      boxShadow="md"
+      overflowY="auto"
+    >
       <Grid
         templateAreas={{
           base: `"nav " "main"`,
@@ -43,7 +55,8 @@ function App() {
           <TabView />
         </GridItem>
       </Grid>
-    </Box>
+      <Footer />
+    </Flex>
   );
 }
 
